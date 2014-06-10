@@ -1,3 +1,6 @@
+import os
+
+import requests
 from picklecache import cache
 
 @cache(os.path.join(os.path.expanduser('~'), '.company'))
@@ -15,4 +18,4 @@ def get(country_code, query):
 def reconcile(country_code, name):
     response = get(country_code, name)
     if response.ok:
-        return res.json().get('result')
+        return response.json().get('result')
