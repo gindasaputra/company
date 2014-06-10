@@ -16,6 +16,7 @@ def get(country_code, query):
 
 
 def reconcile(country_code, name):
-    response = get(country_code, name)
+    query = country_code.replace('/','%2F') # %2F so that pickle_warehouse doesn't make directories
+    response = get(query, name)
     if response.ok:
         return response.json().get('result')
