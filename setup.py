@@ -13,7 +13,7 @@ setup(name='company',
       scripts = [
       ],
       tests_require = ['nose'],
-      version='0.0.3',
+      version='0.0.4',
       license='AGPL',
       classifiers=[
           'Programming Language :: Python :: 3.4',
