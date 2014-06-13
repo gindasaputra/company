@@ -12,7 +12,7 @@ def get(country_code, key, unhashed = None):
 
     If the company has a weird name, pass another thing as the key and the actual value as the unhashed.
     '''
-    query = key if unhashed == None else query
+    query = key if unhashed == None else unhashed
     baseurl = 'https://opencorporates.com/reconcile'
     url = baseurl if country_code == None else base_url + '/' + country_code
     params = {'query': query}
@@ -21,7 +21,10 @@ def get(country_code, key, unhashed = None):
 
 def reconcile(country_code, name):
     query = name.replace('/','%2F') # %2F so that pickle_warehouse doesn't make directories
-    response = get(country_code, query)
+    try:
+        response = get(country_code, query)
+    except OSError:
+        response = get(country_code, hash(query), unhashed = query)
     if response.ok:
         return response.json().get('result')
     else:
